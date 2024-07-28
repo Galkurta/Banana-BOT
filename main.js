@@ -49,7 +49,7 @@ class BananaBot {
                 return null;
             }
         } catch (error) {
-            this.log('Error in the login process: ' + error.message);
+            this.log('Error in login process: ' + error.message);
             return null;
         }
     }
@@ -68,7 +68,7 @@ class BananaBot {
         try {
             return await axios.post(`${this.base_url}/claim_quest`, claimPayload, { headers: this.headers });
         } catch (error) {
-            this.log('Error when claim mission: ' + error.message);
+            this.log('Error when Claim Mandline: ' + error.message);
         }
     }
 
@@ -148,14 +148,14 @@ class BananaBot {
                 });
     
                 if (bestBanana.banana_id === currentEquipBananaId) {
-                    this.log(colors.green(`The best banana is using: ${colors.yellow(bestBanana.name)}.`));
+                    this.log(colors.green(`Best banana is using: ${colors.yellow(bestBanana.name)} | Price : ${colors.yellow(bestBanana.sell_exchange_peel)} Peels / ${colors.yellow(bestBanana.sell_exchange_usdt)} USDT.`));
                     return;
                 }
     
                 const equipPayload = { bananaId: bestBanana.banana_id };
                 const equipResponse = await axios.post(`${this.base_url}/do_equip`, equipPayload, { headers: this.headers });
                 if (equipResponse.data.code === 0) {
-                    this.log(colors.green(`The best banana Equip: ${colors.yellow(bestBanana.name)} with ${bestBanana.daily_peel_limit} ??/ DAY`));
+                    this.log(colors.green(`The best banana Equip: ${colors.yellow(bestBanana.name)} with ${bestBanana.daily_peel_limit} 🍌/ DAY`));
                 } else {
                     this.log(colors.red('Using bananas failed!'));
                 }
@@ -217,7 +217,7 @@ class BananaBot {
                     const remainingMinutes = Math.floor(remainingDuration.as('minutes')) % 60;
                     const remainingSeconds = Math.floor(remainingDuration.as('seconds')) % 60;
     
-                    this.log(colors.yellow(`The remaining time to receive Banana: ${remainingHours} Hour ${remainingMinutes} minutet ${remainingSeconds} second`));
+                    this.log(colors.yellow(`The remaining time to receive Banana: ${remainingHours} Hour ${remainingMinutes} minute ${remainingSeconds} second`));
     
                     const remainLotteryCount = (lotteryInfoData.data || {}).remain_lottery_count || 0;
                     this.log(colors.yellow(`Harvest available: ${colors.white(remainLotteryCount)}`));
@@ -241,7 +241,7 @@ class BananaBot {
                         }
                     }
                 } catch (error) {
-                    this.log('Cannot get Lottery Info: ' + error.message);
+                    this.log('Failed get Lottery Info: ' + error.message);
                 }
     
                 if (todayClickCount < maxClickCount) {
@@ -304,7 +304,7 @@ class BananaBot {
                     const isClaimedQuestLottery = questListData.data.is_claimed || false;
     
                     if (isClaimedQuestLottery) {
-                        this.log(colors.yellow(`Claim Quest is available: ${progress}`));
+                        this.log(colors.yellow(`Claim Quest available: ${progress}`));
                         const claimQuestLotteryResponse = await axios.post(`${this.base_url}/claim_quest_lottery`, {}, { headers: this.headers });
                         if (claimQuestLotteryResponse.data.code === 0) {
                             this.log(colors.green('Claim Quest successfully!'));
